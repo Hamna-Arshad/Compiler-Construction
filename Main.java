@@ -3,6 +3,7 @@ import compiler.automata.NFA;
 import compiler.regex.RegExParser;
 import compiler.table.TransitionTable;
 import compiler.utils.Constants;
+import compiler.errorhandling.errorHandler;
 import java.util.Scanner;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ public class Main
 {
     public static void main(String[] args)
     {
+        errorHandler handler = new errorHandler();
         String sourceCode = "";
 
         // Read File
@@ -85,10 +87,9 @@ public class Main
             System.out.println("Number: " + token);
         } else if (token.matches(Constants.IDENTIFIER_PATTERN)) {
             System.out.println("Identifier: " + token);
-        } else if (Constants.OPERATORS.contains(token)) {
+        } else //System.out.println("Error at line " + lineNum + ": Invalid token '" + token + "'");
+            if (Constants.OPERATORS.contains(token)) {
             System.out.println("Operator: " + token);
-        } else {
-            System.out.println("Error at line " + lineNum + ": Invalid token '" + token + "'");
-        }
+        } else errorHandler.handleError(lineNum, token);
     }
 }

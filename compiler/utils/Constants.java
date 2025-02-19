@@ -1,10 +1,12 @@
 package compiler.utils;
 
+import compiler.errorhandling.errorHandler;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;
-
 public class Constants {
+
     // Keywords
     public static final Set<String> KEYWORDS = new HashSet<>(Arrays.asList(
             "num", "dec", "bool", "letter", "sentence", "show" ));

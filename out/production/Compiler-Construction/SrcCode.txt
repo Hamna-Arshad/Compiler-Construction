@@ -1,0 +1,9 @@
+num x equal 10
+dec y = 3.14159
+dec y2 = 3.141594444
+dec y1 = 3.14
+
+bool isvalid equal true
+char letter equal k
+x equal a + b
+show x + y

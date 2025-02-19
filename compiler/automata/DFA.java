@@ -68,7 +68,7 @@ public class DFA {
         }
         return alphabet;
     }
-    
+    //comment
     public State getStartState() {
         return startState;
     }

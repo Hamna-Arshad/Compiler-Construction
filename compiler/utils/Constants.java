@@ -13,12 +13,12 @@ public class Constants {
     
     // Operators
     public static final Set<String> OPERATORS = new HashSet<>(Arrays.asList(
-        "plus", "minus", "mul", "div", "mod", "power", "equal"));
+        "+", "-", "*", "/", "mod", "power", "equal"));
     
     // Regex Patterns
     public static final String IDENTIFIER_PATTERN = "[a-z][a-z0-9]*";
     public static final String NUMBER_PATTERN = "\\d+(\\.\\d{1,5})?";
-
+    public static final String OPERATOR_PATTERN = "[+|-|*|/]*";
 
     
     // State Types

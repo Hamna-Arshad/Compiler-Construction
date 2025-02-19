@@ -3,6 +3,10 @@ package compiler.table;
 
 import compiler.automata.DFA;
 import compiler.automata.State;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 public class TransitionTable {
@@ -14,21 +18,28 @@ public class TransitionTable {
     
     public void display() {
         System.out.println("\nTransition Table:");
-        System.out.println("----------------");
-        
+        System.out.println("-----------------");
+
         // Print header
-        System.out.print("State\t");
+        System.out.print("State  ||\t");
         for (char c = 'a'; c <= 'z'; c++) {
             System.out.print(c + "\t");
         }
         for (char c = '0'; c <= '9'; c++) {
             System.out.print(c + "\t");
         }
-        System.out.println("Accepting?");
-        
+        System.out.print(".  ");
+        System.out.println("||  Accepting");
+        System.out.println("============================================================================================================================================================================");
+
+        // sorting the state list
+        List<State> stateList = new ArrayList<>(dfa.getStates());
+        stateList.sort(Comparator.comparingInt(state -> Integer.parseInt(state.getName())));
+
+
         // Print transitions for each state
-        for (State state : dfa.getStates()) {
-            System.out.print(state.getName() + "\t");
+        for (State state : stateList) {
+            System.out.print("\t"+state.getName()+"  ||" + "\t");
             
             Map<Character, State> transitions = state.getTransitions();
             for (char c = 'a'; c <= 'z'; c++) {
@@ -39,8 +50,9 @@ public class TransitionTable {
                 State nextState = transitions.get(c);
                 System.out.print((nextState != null ? nextState.getName() : "-") + "\t");
             }
-            
-            System.out.println(state.isAccepting() ? "Yes" : "No");
+            char c = '.';
+            System.out.print((transitions.get(c) != null ? transitions.get(c).getName() : "-") + "  ");
+            System.out.println(state.isAccepting() ? "||  Yes" : "||  No");
         }
     }
 }

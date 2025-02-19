@@ -23,7 +23,7 @@ public class DFA {
         initialSet.add(nfa.getStartState());
         
         // Create DFA's start state
-        State dfaStart = new State("DFA_0", nfa.getStartState().isAccepting());
+        State dfaStart = new State("0", nfa.getStartState().isAccepting());
         dfaStates.put(initialSet, dfaStart);
         unprocessedStates.add(initialSet);
         this.startState = dfaStart;
@@ -47,7 +47,7 @@ public class DFA {
                     // Create new DFA state if needed
                     if (!dfaStates.containsKey(nextSet)) {
                         boolean isAccepting = nextSet.stream().anyMatch(State::isAccepting);
-                        State newState = new State("DFA_" + dfaStates.size(), isAccepting);
+                        State newState = new State(Integer.toString(dfaStates.size()), isAccepting);
                         dfaStates.put(nextSet, newState);
                         unprocessedStates.add(nextSet);
                         this.states.add(newState);

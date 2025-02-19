@@ -14,7 +14,7 @@ public class Main
 
         // Read File
         try {
-            File myObj = new File("C:/Users/Asus/Downloads/project-bolt-sb1-v4h4xgkj/project/src/SrcCode.txt");
+            File myObj = new File("./SrcCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 sourceCode += myReader.nextLine() + "\n";

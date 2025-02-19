@@ -66,7 +66,7 @@ public class DFA {
                 alphabet.addAll(state.getTransitions().keySet());
             }
         }
-        return alphabet;
+        return  alphabet;
     }
     //comment
     public State getStartState() {

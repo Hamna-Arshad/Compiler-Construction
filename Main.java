@@ -31,15 +31,15 @@ public class Main
         RegExParser parser = new RegExParser();
         NFA nfa = parser.generateNFA();
 
-        nfa.printNFA();
         DFA dfa = new DFA(nfa);
-        TransitionTable table = new TransitionTable(dfa);
+        TransitionTable table = new TransitionTable(dfa,nfa);
 
         // Tokenize src code
         tokenize(sourceCode.toString());
 
         // Display transition table
-        table.display();
+        table.displayNFA();
+        table.displayDFA();
 
 
     }

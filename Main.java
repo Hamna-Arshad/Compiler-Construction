@@ -10,14 +10,14 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String sourceCode = "";
+        StringBuilder sourceCode = new StringBuilder();
 
         // Read File
         try {
-            File myObj = new File("C:/Users/Asus/Downloads/project-bolt-sb1-v4h4xgkj/project/src/SrcCode.txt");
+            File myObj = new File("./SrcCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                sourceCode += myReader.nextLine() + "\n";
+                sourceCode.append(myReader.nextLine()).append("\n");
                 //System.out.println(sourceCode);
             }
             myReader.close();
@@ -27,9 +27,6 @@ public class Main
             e.printStackTrace();
         }
 
-        // Tokenize src code
-        tokenize(sourceCode);
-
         // Create lexical analyzer components
         RegExParser parser = new RegExParser();
         NFA nfa = parser.generateNFA();
@@ -37,7 +34,10 @@ public class Main
         nfa.printNFA();
         DFA dfa = new DFA(nfa);
         TransitionTable table = new TransitionTable(dfa);
-        
+
+        // Tokenize src code
+        tokenize(sourceCode.toString());
+
         // Display transition table
         table.display();
 
@@ -45,24 +45,38 @@ public class Main
     }
     
     private static void tokenize(String sourceCode) {
-        System.out.println("\nTokens\n");
+        System.out.println("\n\t\tToken Table");
+        System.out.printf("%-15s %-15s%n", "Token Type", "Token Value");
+        System.out.println("------------------------------------");
+
+        StringBuilder Errors = new StringBuilder();
+
         String[] lines = sourceCode.split("\n");
-        for (int lineNum = 0; lineNum < lines.length; lineNum++) {
-            String line = lines[lineNum].trim();
+
+        for (int i = 0; i < lines.length; i++)
+        {
+            String line = lines[i].trim();
             if (line.isEmpty()) continue;
             
             // Process each line
-            processLine(line, lineNum + 1);
+            Errors.append(processLine(line, i + 1));
         }
+        // Print Errors in the end
+        System.out.println("\n\t\t\tErrors\n" + "------------------------------------\n" + Errors + "------------------------------------\n");
+
+
     }
     
-    private static void processLine(String line, int lineNum) {
+    private static String processLine(String line, int lineNum) {
         StringBuilder token = new StringBuilder();
-        for (int i = 0; i < line.length(); i++) {
+        StringBuilder Errors= new StringBuilder();
+
+        for (int i = 0; i < line.length(); i++)
+        {
             char c = line.charAt(i);
             
             if (Character.isWhitespace(c)) {
-                processToken(token.toString(), lineNum);
+                Errors.append(processToken(token.toString(), lineNum));
                 token = new StringBuilder();
             } else {
                 token.append(c);
@@ -71,24 +85,29 @@ public class Main
         
         // Process last token if exists
         if (!token.isEmpty()) {
-            processToken(token.toString(), lineNum);
+            Errors.append(processToken(token.toString(), lineNum));
         }
+        return Errors.toString();
     }
     
-    private static void processToken(String token, int lineNum)
+    private static StringBuilder processToken(String token, int lineNum)
     {
-        if (token.isEmpty()) return;
-        
+        StringBuilder Errors= new StringBuilder();
+
+        if (token.isEmpty())
+            return Errors;
+
         if (Constants.KEYWORDS.contains(token)) {
-            System.out.println("Keyword: " + token);
+            System.out.printf("%-15s %-15s%n", " Keyword", token);
         } else if (token.matches(Constants.NUMBER_PATTERN)) {
-            System.out.println("Number: " + token);
+            System.out.printf("%-15s %-15s%n", " Number", token);
         } else if (token.matches(Constants.IDENTIFIER_PATTERN)) {
-            System.out.println("Identifier: " + token);
+            System.out.printf("%-15s %-15s%n", " Identifier", token);
         } else if (Constants.OPERATORS.contains(token)) {
-            System.out.println("Operator: " + token);
+            System.out.printf("%-15s %-15s%n", " Operator", token);
         } else {
-            System.out.println("Error at line " + lineNum + ": Invalid token '" + token + "'");
+            Errors.append(" Line ").append(lineNum).append(": Invalid token '").append(token).append("'\n");
         }
+        return Errors;
     }
 }

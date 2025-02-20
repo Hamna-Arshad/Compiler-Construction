@@ -11,7 +11,7 @@ public class LexicalAnalyzer
     private int line;
     private int column;
 
-    public LexicalAnalyzer(String sourceCode) {
+    public LexicalAnalyzer(StringBuilder sourceCode) {
         this.tokens = new ArrayList<>();
         this.symbolTable = new ArrayList<>();
         this.line = 1;
@@ -29,7 +29,7 @@ public class LexicalAnalyzer
         tokenize(sourceCode);
     }
 
-    private void tokenize(String sourceCode) {
+    private void tokenize(StringBuilder sourceCode) {
         StringBuilder currentToken = new StringBuilder();
         boolean inSingleLineComment = false;
         boolean inMultiLineComment = false;
@@ -111,12 +111,12 @@ public class LexicalAnalyzer
         }
 
         // Check if it's an identifier using DFA
-        /*if (dfa.isAccepted(tokenStr)) {
+        if (dfa.isAccepted(tokenStr)) {
             type = TokenType.IDENTIFIER;
             tokens.add(new Token(type, tokenStr, line, column - tokenStr.length()));
             addToSymbolTable(tokenStr, "IDENTIFIER", "global", null);
             return;
-        }*/
+        }
 
         // Check for literals
         if (tokenStr.matches("\\d+")) {

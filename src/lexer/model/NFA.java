@@ -1,4 +1,4 @@
-package lexer.model;
+package src.lexer.model;
 
 import java.util.*;
 

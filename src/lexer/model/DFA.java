@@ -1,4 +1,6 @@
-package lexer.model;
+package src.lexer.model;
+
+import src.lexer.TokenType;
 
 import java.util.*;
 
@@ -65,8 +67,50 @@ public class DFA {
             }
         }
     }
+    public TokenType isAccepted(String input) {
+        ArrayList<State> currentState = startState;
 
-    public boolean isAccepted(String input) {
+        for (char c : input.toCharArray()) {
+            boolean transitionFound = false;
+            ArrayList<State> nextState = null;
+
+            for (Transition t : transitions) {
+                if (t.from.equals(currentState) && t.symbol == c) {
+                    nextState = t.to;
+                    transitionFound = true;
+                    break;
+                }
+            }
+
+            if (!transitionFound) {
+                return null; // Return null if transition fails
+            }
+            currentState = nextState;
+        }
+
+        if (acceptingStates.contains(currentState)) {
+            // Check if token is a keyword or operator
+            TokenType type = TokenType.getType(input);
+            if (type != null) {
+                return type;  // Return KEYWORD or OPERATOR
+            }
+            // Check for different constants
+            if (input.matches("\\d+")) {
+                return TokenType.INTEGER_LITERAL;
+            }
+            if (input.matches("\\d*\\.\\d+")) {
+                return TokenType.DECIMAL_LITERAL;
+            }
+            if (input.equals("true") || input.equals("false")) {
+                return TokenType.BOOLEAN_LITERAL;
+            }
+            return TokenType.IDENTIFIER; // Default case for identifiers
+        }
+
+        return null; // Return null if not in accepting states
+    }
+
+    /*public boolean isAccepted(String input) {
         ArrayList<State> currentState = startState;
 
         for (char c : input.toCharArray()) {
@@ -88,7 +132,7 @@ public class DFA {
         }
 
         return acceptingStates.contains(currentState);
-    }
+    }*/
 
     public void printTransitions() {
         System.out.println("\nDFA States and Transitions:");

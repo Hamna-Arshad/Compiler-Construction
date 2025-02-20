@@ -1,4 +1,4 @@
-package lexer;
+package src.lexer;
 
 public class SymbolTableEntry {
     private String name;

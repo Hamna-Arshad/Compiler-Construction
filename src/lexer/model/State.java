@@ -1,11 +1,20 @@
-package lexer.model;
+package src.lexer.model;
 
 import java.util.*;
 
 public class State {
     private int id;
+    private String name;
     private boolean isAccepting;
     private ArrayList<Transition> transitions;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public State(int id) {
         this.id = id;

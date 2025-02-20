@@ -1,9 +1,14 @@
+package src;
+import src.lexer.LexicalAnalyzer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main 
+{
+    public static void main(String[] args) throws IOException {
 
         StringBuilder SrcCode = new StringBuilder();
         // Read File
@@ -22,7 +27,7 @@ public class Main {
         }
 
         // Create lexical analyzer
-        lexer.LexicalAnalyzer analyzer = new lexer.LexicalAnalyzer(SrcCode);
+        LexicalAnalyzer analyzer = new LexicalAnalyzer(SrcCode);
         
         // Print NFA and DFA transitions
         System.out.println("Lexical Analysis Results:");

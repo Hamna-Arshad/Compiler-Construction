@@ -1,3 +1,4 @@
+/*
 import compiler.automata.DFA;
 import compiler.automata.NFA;
 import compiler.regex.RegExParser;
@@ -114,3 +115,4 @@ public class Main
         return Errors;
     }
 }
+*/

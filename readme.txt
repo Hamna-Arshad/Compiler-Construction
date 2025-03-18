@@ -1,7 +1,5 @@
 # Lexical Analyzer - User Manual
 
-## Overview
-This document serves as a user manual for the lexical analyzer, which processes a custom programming language with specific keywords, rules, and syntax. It is designed to recognize and tokenize different data types, arithmetic operations, and comments while ensuring proper handling of variable scopes and formatting.
 
 ## Keywords and Rules
 
@@ -21,11 +19,11 @@ The system supports the following arithmetic operations:
 - *mul* → Multiplication (*)
 - *div* → Division (/)
 - *mod* → Modulus (% for remainder calculation)
-- *Exponentiation* → Raising numbers to a power for both whole numbers and decimals.
+- *exp* → Raising numbers to a power for both whole numbers and decimals.
 
 ### Comments
 - *Single-line comment:* ** (everything after ** on the same line is ignored by the lexer)
-- *Multi-line comment:* *** ... *** (everything between *** and *** is ignored, even in tricky multi-line cases)
+- *Multi-line comment:* *** ... *** (everything between *** and *** is ignored)
 
 ### Syntax Rules
 - *Assignment:* Variables are assigned values using the equal keyword or =.
@@ -33,62 +31,6 @@ The system supports the following arithmetic operations:
 - *Global and Local Variables:* Supports both scopes.
 - *Transition State Table:* Users can view the transition state table for debugging or understanding the lexer's tokenization process.
 
-## Example Code
-plaintext
-num x equal 10
-dec y equal 3.14159
-numm a equal 8
-dec d = 3.1
-
-***
-dec r equal 3.1
-***
-
-flag isvalid equal true
-**flag w equal true
-char var equal k
-
-x equal a plus b
-show x plus y
-
-
-## Expected Tokenization
-| Token Type  | Lexeme        |
-|------------|--------------|
-| Keyword    | num          |
-| Identifier | x            |
-| Operator   | equal        |
-| Integer    | 10           |
-| Keyword    | dec          |
-| Identifier | y            |
-| Operator   | equal        |
-| Decimal    | 3.14159      |
-| Identifier | a            |
-| Operator   | equal        |
-| Integer    | 8            |
-| Keyword    | dec          |
-| Identifier | d            |
-| Operator   | =            |
-| Decimal    | 3.1          |
-| Comment    | *** ... ***  |
-| Keyword    | flag         |
-| Identifier | isvalid      |
-| Operator   | equal        |
-| Boolean    | true         |
-| Comment    | **flag w...  |
-| Keyword    | char         |
-| Identifier | var          |
-| Operator   | equal        |
-| Character  | k            |
-| Identifier | x            |
-| Operator   | equal        |
-| Identifier | a            |
-| Operator   | plus         |
-| Identifier | b            |
-| Keyword    | show         |
-| Identifier | x            |
-| Operator   | plus         |
-| Identifier | y            |
 
 ## Transition State Table
 The lexer processes input using a transition state table, which maps states based on the current character/token. This table helps in debugging and understanding how the input is being parsed. A detailed transition state table is available within the program.
